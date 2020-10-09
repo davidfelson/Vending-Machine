@@ -6,7 +6,7 @@ namespace Capstone.Classes
 {
     public class Product
     {
-        //Properties for the items: slot location, product name, price, quantity, product type
+        //Properties
         public string SlotLocation { get; set; }
         public string ProductName { get; set; }
         public decimal Price { get; set; }
@@ -14,7 +14,7 @@ namespace Capstone.Classes
         public int Quantity { get; set; }
         
 
-        //Make a constructor with above
+        //Constructor
 
         public Product (string slotLocation, string productName, decimal price, string productType)
         {

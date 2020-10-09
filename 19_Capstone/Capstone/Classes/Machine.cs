@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace Capstone.Classes
 {
     public class Machine
     {
-        private Dictionary<Product, Product> vendingDictionary = new Dictionary<Product, Product>();
+
+        //Properties 
+
+        private Dictionary<string, Product> vendingDictionary = new Dictionary<string, Product>();
+       
         public decimal Balance { get; private set; }
-        public List<Product> ProductList { get; set; } 
-        public int Quantity {get; }
+        public List<Product> ProductList { get; set; }
+        public int Quantity { get; }
 
         //TODO Call on Product.cs properties
 
-        /*todo Properties of Machine
-				 -calls on Properties from Product class
-			Property: Balance
-			-has property/Method PriceTotal that is derived from below dictionay to get product and price
-				-make a dictonary with kvp slot location, Product[product name and price]
-		*/
+       
         //TODO: Add unit tests for FeedMoney() and MakeChange()
+
+        //Methods
         public decimal FeedMoney() //QUESTION: do we need balance in this method?
         {
             Console.Write("Insert bill ($1, $2, $5, $10)");
@@ -50,56 +52,65 @@ namespace Capstone.Classes
             return changeGiven;
         }
 
-
-
-    }
-
         public List<Product> DisplayItems()
         {
 
-        return ProductList; 
+            return ProductList;
         }
 
-          
+        public string DispenseProduct( string slotLocation, Product product)
+        {
+            //make sure item is in machine, checks slot location(if not display message to user)
+            string message = "";
+            foreach (KeyValuePair<string, Product> kvp in vendingDictionary)
+            {
+                if (!vendingDictionary.ContainsKey(kvp.Key))
+                {
+                    message = "This item does not exist.";
+                }
+                else
+                {
+                    if (Quantity == 0)
+                    {
+                        message = "Item is out of stock.";
+                    }
+                    else
+                    {
+                        if (Balance >= product.Price)
+                        {
+                            Balance -= product.Price;
+                            //UpdateQuantity()   
+                            //TODO How to call Method UpdateQuantity
+                            if (product.ProductType == "Gum")
+                            {
+                                message = "Chew Chew, Yum!";
+                            }
+                            if (product.ProductType == "Drink")
+                            {
+                                message = "Glug Glug, Yum!";
+                            }
+                            if (product.ProductType == "Chip")
+                            {
+                                message = "Crunch Crunch, Yum!";
+                            }
+                            else if (product.ProductType == "Candy")
+                            {
+                                message = "Munch Munch, Yum!";
+                            }
 
-
-
-
+                        }
+                        else if (Balance < product.Price)
+                        {
+                            message = "Not enough money in balance for item.";
+                        }
+                      
+                    } 
+                }
+             
+            }
+            return message;
+   
+        }
+    }
 }
 
-
-/*todo Machine Methods
-
-
-    Method: MakeChange()
-
-        decimal input/output
-        takes remaining dollar amount and gives back change
-            ... called in Menu when user selects Exit
-    Method: DisplayItems()
-
-        uses dictonary to list out all items
-        returns list to user
-
-
-    Method: DispenseProduct()
-
-        make sure item is available, checks inventory (if not send user back to menu)
-        make sure item is in machine, checks slot location (if not display message to user)
-            returns error messages or PriceTotal
-        -checks Balance to make sure enough money vs PriceTotal
-        -dispenses item with outgoing message from ProductType
-        -updates Inventory and Balance
-            ... called in Sub Menu when user selects Finish Transaction
-
-*/
-
-
-
-
-
-
-
-
-//	}
-//}

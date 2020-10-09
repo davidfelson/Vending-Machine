@@ -8,16 +8,11 @@ namespace Capstone.Classes
 {
 	class ProductLoader
 	{
-		/*Import Files Method: ImportSnacks()
-
-		StreamReader
-		Parse to string array	
-		make array[i] fit to constructor in Product Class
-		     ...happens automatically at startup of program	
-		*/
-		
+		//Properties
 		public List<Product> ProductList { get; set; }
 		string filePath = @"C:\Users\Student\GIT\c-module-1-capstone-team-4\19_Capstone\vendingmachine.txt";
+		
+		//StreamReader to Import File
 		public ProductLoader(string filePath)
 		{
 			ProductList = new List<Product>();
