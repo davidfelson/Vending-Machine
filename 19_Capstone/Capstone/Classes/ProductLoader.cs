@@ -10,7 +10,7 @@ namespace Capstone.Classes
 	{
 		//Properties
 		public List<Product> ProductList { get; set; }
-		string filePath = @"C:\Users\Student\GIT\c-module-1-capstone-team-4\19_Capstone\vendingmachine.txt";
+		//string filePath = @"C:\Users\Student\GIT\c-module-1-capstone-team-4\19_Capstone\vendingmachine.txt";
 		
 		//StreamReader to Import File
 		public ProductLoader(string filePath)

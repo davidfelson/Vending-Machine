@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Net.Http;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
@@ -13,138 +14,109 @@ namespace Capstone.Classes
         //Properties 
 
         private Dictionary<string, Product> vendingDictionary = new Dictionary<string, Product>();
-       
+
         public decimal Balance { get; private set; }
-        public List<Product> ProductList { get; set; }
+
         public int Quantity { get; set; }
 
-        //TODO Call on Product.cs properties
+        public Machine(List<Product> productList)
+        {
+            foreach (Product product in productList)
+            {
+                vendingDictionary[product.SlotLocation] = product;
+            }
+        }
 
-       
+
         //TODO: Add unit tests for FeedMoney() and MakeChange()
 
         //Methods
-        
+
         //public string[] CollectData()
         //{
-        ////datetime
-        ////product type or feedmoney or give change        
-        ////starting balance                                //HOW TO GET STARTING BALANCE???
-        ////updated balance
-        
-        //}
-            
+        //datetime
+        //product type or feedmoney or give change        
+        //starting balance                                //HOW TO GET STARTING BALANCE???
+        //updated balance
 
-        public decimal FeedMoney() //QUESTION: do we need balance in this method?
+        //}
+
+
+        public decimal FeedMoney(decimal bill) //QUESTION: do we need balance in this method?
         {
-            Console.Write("Insert bill ($1, $2, $5, $10)");
-            string billInserted = Console.ReadLine();
-            string billI = billInserted.Substring(1);  //QUESTION: how does the user enter bills?
-            decimal bill = decimal.Parse(billI);
-            Balance += bill;
-            return Balance;
+            //Console.Write("Insert bill ($1, $2, $5, $10)");
+            //string billInserted = Console.ReadLine();
+            //string billI = billInserted.Substring(1);  //QUESTION: how does the user enter bills?
+            //decimal bill = decimal.Parse(billI);
+            if ((bill == 1M) || (bill == 2M) || (bill == 5M) || (bill == 10M))
+            {
+                Balance += bill;
+                return Balance;
+            }
+            else
+                return Balance;
+
             //Console.WriteLine($"Your balance is: {Balance:C}"); 
         }
 
-        public decimal[] MakeChange()
+        public int[] MakeChange()
         {
             decimal quarter = 0.25M;
             decimal dime = 0.1M;
             decimal nickel = .05M;
-            decimal[] changeGiven = new decimal[] { quarter, dime, nickel };
-            Balance %= quarter;
-            changeGiven[0] = Balance;
+            int[] changeGiven = new int[3];
 
-            Balance %= dime;
-            changeGiven[1] = Balance;
+            changeGiven[0] = (int)(Balance % quarter);
+            Balance -= quarter * changeGiven[0];
 
-            Balance %= nickel;
-            changeGiven[2] = Balance;
+            changeGiven[1] = (int)(Balance % dime);
+            Balance -= dime * changeGiven[1];
+
+            changeGiven[2] = (int)(Balance % nickel);
+            Balance -= nickel * changeGiven[2];
 
             return changeGiven;
         }
 
-        public List<Product> DisplayItems()
-        {
 
-            return ProductList;
+        public IEnumerable<Product> DisplayItems()
+        {
+            return vendingDictionary.Values;
         }
 
-        public string DispenseProduct( string slotLocation, Product product)
+
+        public Product DispenseProduct(string slotLocation)
         {
-            //make sure item is in machine, checks slot location(if not display message to user)
-            string message = "";
-            foreach (KeyValuePair<string, Product> kvp in vendingDictionary)
+             if (!vendingDictionary.ContainsKey(slotLocation))
             {
-                if (!vendingDictionary.ContainsKey(kvp.Key))
+                throw new Exception ("This item does not exist.");
+            }
+
+            Product selectedProduct = vendingDictionary[slotLocation];
+
+            if (selectedProduct.Quantity == 0)
+            {
+                throw new Exception ("Item is out of stock.");
+            }
+            else
+            {
+                if (Balance < selectedProduct.Price)
                 {
-                    message = "This item does not exist.";
+                    throw new Exception ("Not enough money in balance for item.");
                 }
+
                 else
                 {
-                    if (Quantity == 0)
-                    {
-                        message = "Item is out of stock.";
-                    }
-                    else
-                    {
-                        if (Balance >= product.Price)
-                        {
-                            Balance -= product.Price;
+                    Balance -= selectedProduct.Price;
 
-                            Quantity--;
-                         
-                            if (product.ProductType == "Gum")
-                            {
-                                message = "Chew Chew, Yum!";
-                            }
-                            if (product.ProductType == "Drink")
-                            {
-                                message = "Glug Glug, Yum!";
-                            }
-                            if (product.ProductType == "Chip")
-                            {
-                                message = "Crunch Crunch, Yum!";
-                            }
-                            else if (product.ProductType == "Candy")
-                            {
-                                message = "Munch Munch, Yum!";
-                            }
+                    selectedProduct.Quantity--;
 
-                        }
-                        else if (Balance < product.Price)
-                        {
-                            message = "Not enough money in balance for item.";
-                        }
-                      
-                    } 
+                   
                 }
-             
+
             }
-            return message;
-   
-        }
-
-
-
-
-
-        string filePath = @"..\..\..\..\Log.txt";
-
-        public void AuditLog(string[] components)
-        {
-            using (StreamWriter writer = new StreamWriter(filePath, true))
-            {
-                if  
-                {
-
-
-
-                }
-                    {
-                    writer.WriteLine($"{DateTime.UtcNow}");
-                }
-            }
+            //Dispensing an item prints the item name, cost, and the money
+            return selectedProduct;
         }
 
     }

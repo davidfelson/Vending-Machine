@@ -22,16 +22,16 @@ namespace Capstone.Classes
 
         string filePath = @"..\..\..\..\Log.txt";
 
-        public void AuditLog(string[] components)
-        {
-            using (StreamWriter writer = new StreamWriter(filePath, true))
-            {
-                if  //if FeedMoney method runs
-                    { 
-                    writer.WriteLine($"{DateTime.UtcNow}");
-                    }
-            }
-        }
+        //public void AuditLog(string[] components)
+        //{
+        //    using (StreamWriter writer = new StreamWriter(filePath, true))
+        //    {
+        //        if  //if FeedMoney method runs
+        //            { 
+        //            writer.WriteLine($"{DateTime.UtcNow}");
+        //            }
+        //    }
+        //}
       
 
 	
