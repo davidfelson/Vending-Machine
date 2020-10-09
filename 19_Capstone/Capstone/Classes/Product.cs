@@ -25,13 +25,6 @@ namespace Capstone.Classes
             Quantity = 5;
 
         }
-
-        //Method
-        public void UpDateQuantity(int Quantity)
-        {
-            Quantity--;
-        }
-
-
+        
     }
 }

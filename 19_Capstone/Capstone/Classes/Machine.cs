@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
@@ -15,7 +16,7 @@ namespace Capstone.Classes
        
         public decimal Balance { get; private set; }
         public List<Product> ProductList { get; set; }
-        public int Quantity { get; }
+        public int Quantity { get; set; }
 
         //TODO Call on Product.cs properties
 
@@ -23,6 +24,17 @@ namespace Capstone.Classes
         //TODO: Add unit tests for FeedMoney() and MakeChange()
 
         //Methods
+        
+        //public string[] CollectData()
+        //{
+        ////datetime
+        ////product type or feedmoney or give change        
+        ////starting balance                                //HOW TO GET STARTING BALANCE???
+        ////updated balance
+        
+        //}
+            
+
         public decimal FeedMoney() //QUESTION: do we need balance in this method?
         {
             Console.Write("Insert bill ($1, $2, $5, $10)");
@@ -79,8 +91,9 @@ namespace Capstone.Classes
                         if (Balance >= product.Price)
                         {
                             Balance -= product.Price;
-                            //UpdateQuantity()   
-                            //TODO How to call Method UpdateQuantity
+
+                            Quantity--;
+                         
                             if (product.ProductType == "Gum")
                             {
                                 message = "Chew Chew, Yum!";
@@ -111,6 +124,29 @@ namespace Capstone.Classes
             return message;
    
         }
+
+
+
+
+
+        string filePath = @"..\..\..\..\Log.txt";
+
+        public void AuditLog(string[] components)
+        {
+            using (StreamWriter writer = new StreamWriter(filePath, true))
+            {
+                if  
+                {
+
+
+
+                }
+                    {
+                    writer.WriteLine($"{DateTime.UtcNow}");
+                }
+            }
+        }
+
     }
 }
 
