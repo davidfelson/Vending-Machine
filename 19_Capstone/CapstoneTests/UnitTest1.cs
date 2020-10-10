@@ -5,6 +5,8 @@ using System.Collections.Generic;
 namespace CapstoneTests
 {
     [TestClass]
+
+    //ToDo Test Methods
     public class UnitTest1
     {
         private List<Product> TestData = new List<Product>()
@@ -16,14 +18,10 @@ namespace CapstoneTests
         //Test FeedMoney()
         [DataTestMethod]
         [DataRow(new int[] {5}, 5, DisplayName = "feed $5 into machine, Balance of 0")]
-        [DataRow(new int[] { 1, 2, 5 }, 8, DisplayName = "feed $5, 2, 1, Balance of 0")]//"feed $2 into machine, Balance of 10"
-        [DataRow(new int[] { 1, 3, 5 }, 6, DisplayName = "feed $5, 3, 1, Balance of 0")]//"feed $1 into machine, Balance of 2.05")]
-        //"feed $10 into machine, Balance of -2.05")]
-        //"feed $4 into machine, has balance of $12")]
-        //("50", "0", "0", DisplayName = "feed $50 into machine, has balance of $0")]
+        [DataRow(new int[] { 1, 2, 5 }, 8, DisplayName = "feed $5, 2, 1, Balance of 0")]
+        [DataRow(new int[] {0}, 0, DisplayName = "feed 0, Balance of 0")]
 
-        //Testing shorthad G = goodbill- 1,2,5,10 B = badbill, E= empty balance
-        public void FeedMoneyTestGE(int[] moneyInserted,  double expectedBalanceD)
+        public void FeedMoneyDataTest(int[] moneyInserted,  double expectedBalanceD)
         {
             //Arrange
             Machine machine = new Machine(TestData);
@@ -52,8 +50,6 @@ namespace CapstoneTests
             int[] expectedArray = new int[] { 0, 0, 0 };
             Machine machine = new Machine(TestData);
 
-            
-
             //Act
             int[] result = machine.MakeChange();
 
@@ -73,7 +69,6 @@ namespace CapstoneTests
             machine.FeedMoney(feedMoney);
             machine.DispenseProduct(productPurchase);
 
-
             //Act
             int[] result = machine.MakeChange();
 
@@ -87,16 +82,16 @@ namespace CapstoneTests
         [TestMethod]
         public void DispenseProductTestSLDoesNotExist()
         {
-            //Arrange
-            Machine machine = new Machine(TestData);
-            string slotLocation = "Z1";
-            string expectedMessage = "This item does not exist.";
+            ////Arrange
+            //Machine machine = new Machine(TestData);
+            //string slotLocation = "Z1";
+            //string expectedMessage = "This item does not exist.";
             
-            //Act
-            string result = machine.DispenseProduct(slotLocation);
+            ////Act
+            //string result = machine.DispenseProduct(slotLocation);
 
-            //Assert
-            Assert.AreEqual(expectedMessage, result);
+            ////Assert
+            //Assert.AreEqual(expectedMessage, result);
 
         }
     }

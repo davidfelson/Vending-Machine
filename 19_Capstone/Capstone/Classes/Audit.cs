@@ -7,7 +7,7 @@ using System.Text;
 namespace Capstone.Classes
 {
 
-    //    todo Make Method and Streamwriter
+    //TODO Streamwriter
     // Method: LogTransactions()
     //-make and array to log below info each time an item is despensed
 

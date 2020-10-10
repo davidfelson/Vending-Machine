@@ -8,7 +8,6 @@ namespace Capstone.UI_Folder
 {
     public class SubMenu : ConsoleMenu
     {
-        //TODO Make SubMenu
         private Machine machine;
         public SubMenu(Machine machine)
         {
@@ -20,11 +19,11 @@ namespace Capstone.UI_Folder
         private MenuOptionResult SelectProduct()
         {
             //Todo Display the list of products and locations and price
-            string input = GetString("Enter Slot Location");
+            string input = GetString("Enter Selection");
             try
             {
                 Product selectedProduct = machine.DispenseProduct(input);
-                Console.WriteLine($"You bought {selectedProduct.ProductName} {selectedProduct.Message}");
+                Console.WriteLine($"You purchased {selectedProduct.ProductName}. {selectedProduct.Message}");
                 return MenuOptionResult.WaitAfterMenuSelection;
             }
             catch (Exception ex)
@@ -38,8 +37,7 @@ namespace Capstone.UI_Folder
 
         private MenuOptionResult FeedMoney()
         {
-            //prompt the user for their bill
-            int money = GetInteger("How Much", null, new int[] { 1, 2, 5, 10 });
+            int money = GetInteger("Please enter bill: $1, $2, $5, $10", null, new int[] { 1, 2, 5, 10 });
             machine.FeedMoney(money);
             return MenuOptionResult.DoNotWaitAfterMenuSelection;  
         }

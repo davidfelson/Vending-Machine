@@ -27,36 +27,13 @@ namespace Capstone.Classes
             }
         }
 
-
-        //TODO: Add unit tests for FeedMoney() and MakeChange()
-
         //Methods
 
-        //public string[] CollectData()
-        //{
-        //datetime
-        //product type or feedmoney or give change        
-        //starting balance                                //HOW TO GET STARTING BALANCE???
-        //updated balance
-
-        //}
-
-
-        public decimal FeedMoney(decimal bill) //QUESTION: do we need balance in this method?
+        public decimal FeedMoney(decimal bill) 
         {
-            //Console.Write("Insert bill ($1, $2, $5, $10)");
-            //string billInserted = Console.ReadLine();
-            //string billI = billInserted.Substring(1);  //QUESTION: how does the user enter bills?
-            //decimal bill = decimal.Parse(billI);
-            if ((bill == 1M) || (bill == 2M) || (bill == 5M) || (bill == 10M))
-            {
                 Balance += bill;
                 return Balance;
-            }
-            else
-                return Balance;
-
-            //Console.WriteLine($"Your balance is: {Balance:C}"); 
+            
         }
 
         public int[] MakeChange()
@@ -78,7 +55,7 @@ namespace Capstone.Classes
             return changeGiven;
         }
 
-
+        //ToDo Make Display Items Display slot location and price
         public IEnumerable<Product> DisplayItems()
         {
             return vendingDictionary.Values;
@@ -118,6 +95,8 @@ namespace Capstone.Classes
             //Dispensing an item prints the item name, cost, and the money
             return selectedProduct;
         }
+
+        //ToDo Make a Method to Log Transactions string[]
 
     }
 }

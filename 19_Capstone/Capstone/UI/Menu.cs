@@ -8,15 +8,15 @@ namespace Capstone.UI_Folder
 {
     public class Menu : ConsoleMenu
     {
-        //TODO Make Main Menu with Title
+        //TODO Add Title, Colors to Display
 
         private Machine machine;
         public Menu (Machine machine)
         {
             this.machine = machine;
-            AddOption("display items", DisplayItems);
-            AddOption("purchase menu", PurchaseMenu);
-            AddOption("exit", Exit);
+            AddOption("Display Items", DisplayItems);
+            AddOption("Purchase Menu", PurchaseMenu);
+            AddOption("Exit", Exit);
         }
 
         private MenuOptionResult PurchaseMenu()
