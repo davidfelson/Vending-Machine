@@ -8,8 +8,6 @@ namespace Capstone.UI_Folder
 {
     public class Menu : ConsoleMenu
     {
-        //TODO Add Title, Colors to Display
-
         private Machine machine;
         public Menu (Machine machine)
         {
@@ -17,6 +15,16 @@ namespace Capstone.UI_Folder
             AddOption("Display Items", DisplayItems);
             AddOption("Purchase Menu", PurchaseMenu);
             AddOption("Exit", Exit);
+
+            Configure(cfg =>
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                cfg.Title = "Vendo-Matic 800";
+                cfg.ItemForegroundColor = ConsoleColor.Cyan;
+                cfg.SelectedItemForegroundColor = ConsoleColor.Blue;
+                
+            });
+
         }
 
         private MenuOptionResult PurchaseMenu()
@@ -30,7 +38,7 @@ namespace Capstone.UI_Folder
         {
             foreach (Product product in machine.DisplayItems())
             {
-                Console.WriteLine(product.ProductName);
+                Console.WriteLine($"{product.SlotLocation} {product.ProductName} {product.Price:C}");
             }
             return MenuOptionResult.WaitAfterMenuSelection;
         }

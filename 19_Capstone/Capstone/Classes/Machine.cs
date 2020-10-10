@@ -19,6 +19,7 @@ namespace Capstone.Classes
 
         public int Quantity { get; set; }
 
+
         public Machine(List<Product> productList)
         {
             foreach (Product product in productList)
@@ -27,13 +28,16 @@ namespace Capstone.Classes
             }
         }
 
+
+
+
         //Methods
 
-        public decimal FeedMoney(decimal bill) 
+        public decimal FeedMoney(decimal bill)
         {
-                Balance += bill;
-                return Balance;
-            
+            Balance += bill;
+            return Balance;
+
         }
 
         public int[] MakeChange()
@@ -42,44 +46,45 @@ namespace Capstone.Classes
             decimal dime = 0.1M;
             decimal nickel = .05M;
             int[] changeGiven = new int[3];
-
-            changeGiven[0] = (int)(Balance % quarter);
+            decimal mathStep = Balance / quarter;
+            changeGiven[0] = (int)(mathStep);
             Balance -= quarter * changeGiven[0];
 
-            changeGiven[1] = (int)(Balance % dime);
+            decimal mathStep1 = Balance / dime;
+            changeGiven[1] = (int)(mathStep1);
             Balance -= dime * changeGiven[1];
 
-            changeGiven[2] = (int)(Balance % nickel);
+            decimal mathStep2 = Balance / nickel;
+            changeGiven[2] = (int)(mathStep2);
             Balance -= nickel * changeGiven[2];
 
             return changeGiven;
         }
 
-        //ToDo Make Display Items Display slot location and price
+
         public IEnumerable<Product> DisplayItems()
         {
             return vendingDictionary.Values;
         }
 
-
         public Product DispenseProduct(string slotLocation)
         {
-             if (!vendingDictionary.ContainsKey(slotLocation))
+            if (!vendingDictionary.ContainsKey(slotLocation))
             {
-                throw new Exception ("This item does not exist.");
+                throw new Exception("This item does not exist.");
             }
 
             Product selectedProduct = vendingDictionary[slotLocation];
 
             if (selectedProduct.Quantity == 0)
             {
-                throw new Exception ("Item is out of stock.");
+                throw new Exception("Item is out of stock.");
             }
             else
             {
                 if (Balance < selectedProduct.Price)
                 {
-                    throw new Exception ("Not enough money in balance for item.");
+                    throw new Exception("Not enough money in balance for item.");
                 }
 
                 else
@@ -88,7 +93,7 @@ namespace Capstone.Classes
 
                     selectedProduct.Quantity--;
 
-                   
+
                 }
 
             }
@@ -96,7 +101,28 @@ namespace Capstone.Classes
             return selectedProduct;
         }
 
-        //ToDo Make a Method to Log Transactions string[]
+        public void AuditLog(string components)
+        {
+            string filePathLog = @"..\..\..\..\Log.txt";
+            using (StreamWriter writer = new StreamWriter(filePathLog, true))
+            {
+                writer.WriteLine(components);
+
+            }
+
+        }
+
+        public void SalesReport(string salesLog)
+        {
+            string filePathLog = @"..\..\..\..\SalesReport.txt";
+            using (StreamWriter writer = new StreamWriter(filePathLog, false))
+            {
+                writer.WriteLine(salesLog);
+
+            }
+
+        }
+
 
     }
 }
