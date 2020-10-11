@@ -11,8 +11,6 @@ namespace Capstone
             string filePath = @"C:\Users\Student\GIT\c-module-1-capstone-team-4\19_Capstone\vendingmachine.txt";
             ProductLoader productLoader = new ProductLoader(filePath);
             Machine machine = new Machine(productLoader.ProductList);
-            //string filePathLog = @"..\..\..\..\Log.txt";
-            //Audit audit = new Audit(filePathLog);
             Menu menu = new Menu(machine);
             menu.Show();
             

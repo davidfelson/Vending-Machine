@@ -41,11 +41,24 @@ namespace Capstone.UI_Folder
 
         private MenuOptionResult DisplayItems()
         {
-            foreach (Product product in machine.DisplayItems())
+            try 
             {
-                Console.WriteLine($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\t{product.Quantity}");
-            }
+                foreach (Product product in machine.DisplayItems())
+                {
+                    if (product.Quantity == 0)
+                    {
+                        throw new Exception($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\tSOLD OUT");
+                    }
+                    Console.WriteLine($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\t{product.Quantity}");
+                }
                 return MenuOptionResult.WaitAfterMenuSelection;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return MenuOptionResult.WaitAfterMenuSelection;
+            }
+            
            
         }
     }
