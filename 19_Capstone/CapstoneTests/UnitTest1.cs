@@ -15,16 +15,7 @@ namespace CapstoneTests
             new Product ("B1", "Candy", 2.35M, "Candy")
         };
 
-        private UnitTest1 (List<Product> TestData)
-        {
-            foreach (Product product in TestData)
-            {
-                vendingDictionary[product.SlotLocation] = product;
-            }
-
-
-        }
-
+        
         private Dictionary<string, Product> vendingDictionary = new Dictionary<string, Product>();
 
         //Test FeedMoney()
@@ -104,7 +95,7 @@ namespace CapstoneTests
             //Act
             Product result = machine.DispenseProduct(input);
 
-            ////Assert
+            //Assert
             Assert.AreEqual(expectedProduct, result);
 
         }

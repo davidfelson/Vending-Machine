@@ -40,21 +40,28 @@ namespace Capstone.UI_Folder
 
         private MenuOptionResult SelectProduct()
         {
-            try
-            {
+            
                 foreach (Product product in machine.DisplayItems())
                 {
                     if (product.Quantity == 0)
                     {
-                        throw new Exception($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\tSOLD OUT");
+                       Console.WriteLine($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\tSOLD OUT");
                     }
-                    Console.WriteLine($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\t{product.Quantity}");
+                    else
+                    {
+                       Console.WriteLine($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\t{product.Quantity}");
+                    }
+                    
                 }
+            
+
+
                 Console.ForegroundColor = ConsoleColor.Red;
                 string input = GetString("Enter Selection");
                 Console.ResetColor();
 
-
+            try
+            {
                 Product selectedProduct = machine.DispenseProduct(input);
                 string logTextProduct = $"{DateTime.UtcNow} {selectedProduct.ProductName} {selectedProduct.SlotLocation} {(machine.Balance + selectedProduct.Price):C} {machine.Balance:C}";
                 machine.AuditLog((logTextProduct));

@@ -2,6 +2,7 @@
 using MenuFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Text;
 
 namespace Capstone.UI_Folder
@@ -9,7 +10,7 @@ namespace Capstone.UI_Folder
     public class Menu : ConsoleMenu
     {
         private Machine machine;
-        public Menu (Machine machine)
+        public Menu(Machine machine)
         {
             this.machine = machine;
             AddOption("Display Items", DisplayItems);
@@ -22,7 +23,7 @@ namespace Capstone.UI_Folder
                 cfg.Title = "Vendo-Matic 800";
                 cfg.ItemForegroundColor = ConsoleColor.Cyan;
                 cfg.SelectedItemForegroundColor = ConsoleColor.Blue;
-                
+
             });
 
         }
@@ -34,32 +35,26 @@ namespace Capstone.UI_Folder
             return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
 
-        private MenuOptionResult SalesReport()
-        {
-            throw new NotImplementedException();
-        }
 
         private MenuOptionResult DisplayItems()
         {
-            try 
+
+            foreach (Product product in machine.DisplayItems())
             {
-                foreach (Product product in machine.DisplayItems())
+                if (product.Quantity == 0)
                 {
-                    if (product.Quantity == 0)
-                    {
-                        throw new Exception($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\tSOLD OUT");
-                    }
+                    Console.WriteLine($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\tSOLD OUT");
+                }
+                else
+                {
                     Console.WriteLine($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\t{product.Quantity}");
                 }
-                return MenuOptionResult.WaitAfterMenuSelection;
+
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return MenuOptionResult.WaitAfterMenuSelection;
-            }
-            
-           
+            return MenuOptionResult.WaitAfterMenuSelection;
+
+
+
         }
     }
 }
