@@ -15,6 +15,18 @@ namespace CapstoneTests
             new Product ("B1", "Candy", 2.35M, "Candy")
         };
 
+        private UnitTest1 (List<Product> TestData)
+        {
+            foreach (Product product in TestData)
+            {
+                vendingDictionary[product.SlotLocation] = product;
+            }
+
+
+        }
+
+        private Dictionary<string, Product> vendingDictionary = new Dictionary<string, Product>();
+
         //Test FeedMoney()
         [DataTestMethod]
         [DataRow(new int[] {5}, 5, DisplayName = "feed $5 into machine, Balance of 0")]
@@ -80,18 +92,20 @@ namespace CapstoneTests
 
         //Test DispenseProduct()
         [TestMethod]
-        public void DispenseProductTestSLDoesNotExist()
+        public void DispenseProductTest()
         {
-            ////Arrange
-            //Machine machine = new Machine(TestData);
-            //string slotLocation = "Z1";
-            //string expectedMessage = "This item does not exist.";
-            
-            ////Act
-            //string result = machine.DispenseProduct(slotLocation);
+            Machine machine = new Machine(TestData);
+            int feedMoney = 10;
+            string input = "A1";
+            string slotLocation = "A1";
+            machine.FeedMoney(feedMoney);
+            Product expectedProduct = vendingDictionary[slotLocation];
+
+            //Act
+            Product result = machine.DispenseProduct(input);
 
             ////Assert
-            //Assert.AreEqual(expectedMessage, result);
+            Assert.AreEqual(expectedProduct, result);
 
         }
     }

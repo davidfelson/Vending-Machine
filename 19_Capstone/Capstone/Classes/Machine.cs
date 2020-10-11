@@ -15,20 +15,20 @@ namespace Capstone.Classes
 
         private Dictionary<string, Product> vendingDictionary = new Dictionary<string, Product>();
 
+        private Dictionary<string, int> salesDictionary = new Dictionary<string, int>();
+
         public decimal Balance { get; private set; }
-
+        //TODO Get Quantity to Display Sold Out
         public int Quantity { get; set; }
-
-
+        
         public Machine(List<Product> productList)
         {
             foreach (Product product in productList)
             {
                 vendingDictionary[product.SlotLocation] = product;
             }
+           
         }
-
-
 
 
         //Methods
@@ -64,7 +64,7 @@ namespace Capstone.Classes
 
         public IEnumerable<Product> DisplayItems()
         {
-            return vendingDictionary.Values;
+             return vendingDictionary.Values;
         }
 
         public Product DispenseProduct(string slotLocation)
@@ -97,7 +97,7 @@ namespace Capstone.Classes
                 }
 
             }
-            //Dispensing an item prints the item name, cost, and the money
+            
             return selectedProduct;
         }
 
@@ -112,12 +112,15 @@ namespace Capstone.Classes
 
         }
 
-        public void SalesReport(string salesLog)
+        public void SalesReport(string productName, int quantity, decimal sales)
         {
+            //List<Product> salesList = new List<Product>(productName, quantity, sales);
+
+
             string filePathLog = @"..\..\..\..\SalesReport.txt";
             using (StreamWriter writer = new StreamWriter(filePathLog, false))
             {
-                writer.WriteLine(salesLog);
+                writer.WriteLine();
 
             }
 

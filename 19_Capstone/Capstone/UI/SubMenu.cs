@@ -20,8 +20,6 @@ namespace Capstone.UI_Folder
             
             Configure(cfg =>
             {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                cfg.Title = "Vendo-Matic 800";
                 cfg.ItemForegroundColor = ConsoleColor.Cyan;
                 cfg.SelectedItemForegroundColor = ConsoleColor.Blue;
 
@@ -44,7 +42,7 @@ namespace Capstone.UI_Folder
         {
             foreach (Product product in machine.DisplayItems())
             {
-                Console.WriteLine($"{product.SlotLocation}\t{product.ProductName} {product.Price:C}");
+                Console.WriteLine($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\t{product.Quantity}");
             }
             Console.ForegroundColor = ConsoleColor.Red;
             string input = GetString("Enter Selection");

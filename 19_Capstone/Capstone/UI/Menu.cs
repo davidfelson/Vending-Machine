@@ -34,13 +34,19 @@ namespace Capstone.UI_Folder
             return MenuOptionResult.DoNotWaitAfterMenuSelection;
         }
 
+        private MenuOptionResult SalesReport()
+        {
+            throw new NotImplementedException();
+        }
+
         private MenuOptionResult DisplayItems()
         {
             foreach (Product product in machine.DisplayItems())
             {
-                Console.WriteLine($"{product.SlotLocation} {product.ProductName} {product.Price:C}");
+                Console.WriteLine($"{product.SlotLocation}\t{product.ProductName,-16}\t{product.Price:C}\t{product.Quantity}");
             }
-            return MenuOptionResult.WaitAfterMenuSelection;
+                return MenuOptionResult.WaitAfterMenuSelection;
+           
         }
     }
 }
